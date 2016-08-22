@@ -20,12 +20,12 @@ ext.versions = [
 
         dagger                       : '2.4',
 
-        rxAndroid                    : '1.2.0',
-        rxJava                       : '1.1.5',
+        rxAndroid                    : '1.2.1',
+        rxJava                       : '1.1.9',
         rxLint                       : '1.0',
         supportLibs                  : '23.4.0',
-        okHttp                       : '3.2.0',
-        retrofit                     : '2.0.0-beta4',
+        okHttp                       : '3.4.1',
+        retrofit                     : '2.1.0',
         jackson                      : '2.6.3',
         autoValue                    : '1.2-rc1',
         butterKnife                  : '8.0.1',
@@ -95,6 +95,7 @@ ext.libraries = [
         okHttpLoggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$versions.okHttp",
         retrofit                : "com.squareup.retrofit2:retrofit:$versions.retrofit",
         retrofitJacksonConverter: "com.squareup.retrofit2:converter-jackson:$versions.retrofit",
+        retrofitGSonConverter   : "com.squareup.retrofit2:converter-gson:$versions.retrofit",
         retrofitRxJavaAdapter   : "com.squareup.retrofit2:adapter-rxjava:$versions.retrofit",
         jacksonDataBind         : "com.fasterxml.jackson.core:jackson-databind:$versions.jackson",
 

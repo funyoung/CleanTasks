@@ -33,4 +33,14 @@ dependencies {
     compile libraries.supportDesign
 //    provided libraries.javaxAnnotation
     compile libraries.dagger
+
+    compile libraries.rxJava
+    compile libraries.rxjavaAndroid
+
+    compile libraries.retrofit;
+    compile libraries.retrofitGSonConverter;
+    compile libraries.retrofitRxJavaAdapter;
+
+    compile libraries.okHttp;
+    compile libraries.okHttpLoggingInterceptor;
 }
