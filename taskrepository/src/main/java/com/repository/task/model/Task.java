@@ -19,23 +19,31 @@ package com.repository.task.model;
 import android.support.annotation.Nullable;
 
 import com.google.common.base.Objects;
-
-import java.util.UUID;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Immutable model class for a Task.
  */
 public final class Task {
 
-    private final String id;
+    @SerializedName("objectId")
+    private String objectId;
+
+    @SerializedName("createdAt")
+    private String createdAt;
+
+    @SerializedName("updatedAt")
+    private String updatedAt;
+
+    @SerializedName("title")
+    @Nullable
+    private String title;
 
     @Nullable
-    private final String title;
+    private String description;
 
-    @Nullable
-    private final String description;
-
-    private final boolean isCompleted;
+    @SerializedName("completed")
+    private boolean completed;
     /**
      * Use this constructor to create a new active Task.
      *
@@ -43,25 +51,25 @@ public final class Task {
      * @param description
      */
     public Task(@Nullable String title, @Nullable String description) {
-        id = UUID.randomUUID().toString();
+//        objectId = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
-        isCompleted = false;
+        completed = false;
     }
 
     /**
-     * Use this constructor to create an active Task if the Task already has an id (copy of another
+     * Use this constructor to create an active Task if the Task already has an objectId (copy of another
      * Task).
      *
      * @param title
      * @param description
-     * @param id of the class
+     * @param objectId of the class
      */
-    public Task(@Nullable String title, @Nullable String description, String id) {
-        this.id = id;
+    public Task(@Nullable String title, @Nullable String description, String objectId) {
+        this.objectId = objectId;
         this.title = title;
         this.description = description;
-        isCompleted = false;
+        completed = false;
     }
 
     /**
@@ -72,30 +80,30 @@ public final class Task {
      * @param completed
      */
     public Task(@Nullable String title, @Nullable String description, boolean completed) {
-        id = UUID.randomUUID().toString();
+//        objectId = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
-        isCompleted = completed;
+        this.completed = completed;
     }
 
     /**
-     * Use this constructor to specify a completed Task if the Task already has an id (copy of
+     * Use this constructor to specify a completed Task if the Task already has an objectId (copy of
      * another Task).
      *
      * @param title
      * @param description
-     * @param id
+     * @param objectId
      * @param completed
      */
-    public Task(@Nullable String title, @Nullable String description, String id, boolean completed) {
-        this.id = id;
+    public Task(@Nullable String title, @Nullable String description, String objectId, boolean completed) {
+        this.objectId = objectId;
         this.title = title;
         this.description = description;
-        isCompleted = completed;
+        this.completed = completed;
     }
 
-    public String getId() {
-        return id;
+    public String getObjectId() {
+        return objectId;
     }
 
     @Nullable
@@ -118,11 +126,11 @@ public final class Task {
     }
 
     public boolean isCompleted() {
-        return isCompleted;
+        return completed;
     }
 
     public boolean isActive() {
-        return !isCompleted;
+        return !completed;
     }
 
     public boolean isEmpty() {
@@ -135,14 +143,14 @@ public final class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equal(id, task.id) &&
+        return Objects.equal(objectId, task.objectId) &&
                 Objects.equal(title, task.title) &&
                 Objects.equal(description, task.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, title, description);
+        return Objects.hashCode(objectId, title, description);
     }
 
     @Override

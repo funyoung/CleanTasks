@@ -78,7 +78,7 @@ android {
 dependencies {
 //    compile project(path: ':taskui')
     mockCompile project(path: ':taskui', configuration: 'mockDebug')
-    prodCompile project(path: ':taskui', configuration: 'prodRelease')
+    prodCompile project(path: ':taskui', configuration: 'prodDebug')
 
     apt libraries.butterKnifeCompiler
     compile libraries.butterKnife

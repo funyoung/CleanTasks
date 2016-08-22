@@ -26,4 +26,14 @@ dependencies {
 //    compile libraries.supportAppCompat
 //    compile libraries.supportDesign
 //    testCompile libraries.junit
+
+    compile libraries.rxJava
+    compile libraries.rxjavaAndroid
+
+    compile libraries.retrofit;
+    compile libraries.retrofitGSonConverter;
+    compile libraries.retrofitRxJavaAdapter;
+
+    compile libraries.okHttp;
+    compile libraries.okHttpLoggingInterceptor;
 }

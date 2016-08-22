@@ -81,7 +81,7 @@ public class TasksLocalDataSourceTest {
         mLocalDataSource.saveTask(newTask);
 
         // Then the task can be retrieved from the persistent repository
-        mLocalDataSource.getTask(newTask.getId(), new TasksDataSource.GetTaskCallback() {
+        mLocalDataSource.getTask(newTask.getObjectId(), new TasksDataSource.GetTaskCallback() {
             @Override
             public void onTaskLoaded(Task task) {
                 assertThat(task, is(newTask));
@@ -106,7 +106,7 @@ public class TasksLocalDataSourceTest {
         mLocalDataSource.completeTask(newTask);
 
         // Then the task can be retrieved from the persistent repository and is complete
-        mLocalDataSource.getTask(newTask.getId(), new TasksDataSource.GetTaskCallback() {
+        mLocalDataSource.getTask(newTask.getObjectId(), new TasksDataSource.GetTaskCallback() {
             @Override
             public void onTaskLoaded(Task task) {
                 assertThat(task, is(newTask));
@@ -134,7 +134,7 @@ public class TasksLocalDataSourceTest {
         mLocalDataSource.activateTask(newTask);
 
         // Then the task can be retrieved from the persistent repository and is active
-        mLocalDataSource.getTask(newTask.getId(), callback);
+        mLocalDataSource.getTask(newTask.getObjectId(), callback);
 
         verify(callback, never()).onDataNotAvailable();
         verify(callback).onTaskLoaded(newTask);
@@ -163,17 +163,17 @@ public class TasksLocalDataSourceTest {
         mLocalDataSource.clearCompletedTasks();
 
         // Then the completed tasks cannot be retrieved and the active one can
-        mLocalDataSource.getTask(newTask1.getId(), callback1);
+        mLocalDataSource.getTask(newTask1.getObjectId(), callback1);
 
         verify(callback1).onDataNotAvailable();
         verify(callback1, never()).onTaskLoaded(newTask1);
 
-        mLocalDataSource.getTask(newTask2.getId(), callback2);
+        mLocalDataSource.getTask(newTask2.getObjectId(), callback2);
 
         verify(callback2).onDataNotAvailable();
         verify(callback2, never()).onTaskLoaded(newTask1);
 
-        mLocalDataSource.getTask(newTask3.getId(), callback3);
+        mLocalDataSource.getTask(newTask3.getObjectId(), callback3);
 
         verify(callback3, never()).onDataNotAvailable();
         verify(callback3).onTaskLoaded(newTask3);
@@ -214,10 +214,10 @@ public class TasksLocalDataSourceTest {
                 boolean newTask1IdFound = false;
                 boolean newTask2IdFound = false;
                 for (Task task: tasks) {
-                    if (task.getId().equals(newTask1.getId())) {
+                    if (task.getObjectId().equals(newTask1.getObjectId())) {
                         newTask1IdFound = true;
                     }
-                    if (task.getId().equals(newTask2.getId())) {
+                    if (task.getObjectId().equals(newTask2.getObjectId())) {
                         newTask2IdFound = true;
                     }
                 }

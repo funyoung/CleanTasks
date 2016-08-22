@@ -49,13 +49,13 @@ public class FakeTasksRemoteDataSource implements TasksDataSource {
 
     @Override
     public void saveTask(@NonNull Task task) {
-        TASKS_SERVICE_DATA.put(task.getId(), task);
+        TASKS_SERVICE_DATA.put(task.getObjectId(), task);
     }
 
     @Override
     public void completeTask(@NonNull Task task) {
-        Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getId(), true);
-        TASKS_SERVICE_DATA.put(task.getId(), completedTask);
+        Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getObjectId(), true);
+        TASKS_SERVICE_DATA.put(task.getObjectId(), completedTask);
     }
 
     @Override
@@ -65,8 +65,8 @@ public class FakeTasksRemoteDataSource implements TasksDataSource {
 
     @Override
     public void activateTask(@NonNull Task task) {
-        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getId());
-        TASKS_SERVICE_DATA.put(task.getId(), activeTask);
+        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getObjectId());
+        TASKS_SERVICE_DATA.put(task.getObjectId(), activeTask);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class FakeTasksRemoteDataSource implements TasksDataSource {
     @VisibleForTesting
     public void addTasks(Task... tasks) {
         for (Task task : tasks) {
-            TASKS_SERVICE_DATA.put(task.getId(), task);
+            TASKS_SERVICE_DATA.put(task.getObjectId(), task);
         }
     }
 }

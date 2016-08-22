@@ -83,11 +83,11 @@ public class TaskDetailPresenterTest {
     @Test
     public void getActiveTaskFromRepositoryAndLoadIntoView() {
         // When tasks presenter is asked to open a task
-        mTaskDetailPresenter = givenTaskDetailPresenter(ACTIVE_TASK.getId());
+        mTaskDetailPresenter = givenTaskDetailPresenter(ACTIVE_TASK.getObjectId());
         mTaskDetailPresenter.start();
 
         // Then task is loaded from model, callback is captured and progress indicator is shown
-        verify(mTasksRepository).getTask(eq(ACTIVE_TASK.getId()), mGetTaskCallbackCaptor.capture());
+        verify(mTasksRepository).getTask(eq(ACTIVE_TASK.getObjectId()), mGetTaskCallbackCaptor.capture());
         verify(mTaskDetailView).setLoadingIndicator(true);
 
         // When task is finally loaded
@@ -103,12 +103,12 @@ public class TaskDetailPresenterTest {
 
     @Test
     public void getCompletedTaskFromRepositoryAndLoadIntoView() {
-        mTaskDetailPresenter = givenTaskDetailPresenter(COMPLETED_TASK.getId());
+        mTaskDetailPresenter = givenTaskDetailPresenter(COMPLETED_TASK.getObjectId());
         mTaskDetailPresenter.start();
 
         // Then task is loaded from model, callback is captured and progress indicator is shown
         verify(mTasksRepository).getTask(
-                eq(COMPLETED_TASK.getId()), mGetTaskCallbackCaptor.capture());
+                eq(COMPLETED_TASK.getObjectId()), mGetTaskCallbackCaptor.capture());
         verify(mTaskDetailView).setLoadingIndicator(true);
 
         // When task is finally loaded
@@ -136,11 +136,11 @@ public class TaskDetailPresenterTest {
         Task task = new Task(TITLE_TEST, DESCRIPTION_TEST);
 
         // When the deletion of a task is requested
-        mTaskDetailPresenter = givenTaskDetailPresenter(task.getId());
+        mTaskDetailPresenter = givenTaskDetailPresenter(task.getObjectId());
         mTaskDetailPresenter.deleteTask();
 
         // Then the repository and the view are notified
-        verify(mTasksRepository).deleteTask(task.getId());
+        verify(mTasksRepository).deleteTask(task.getObjectId());
         verify(mTaskDetailView).showTaskDeleted();
     }
 
@@ -148,14 +148,14 @@ public class TaskDetailPresenterTest {
     public void completeTask() {
         // Given an initialized presenter with an active task
         Task task = new Task(TITLE_TEST, DESCRIPTION_TEST);
-        mTaskDetailPresenter = givenTaskDetailPresenter(task.getId());
+        mTaskDetailPresenter = givenTaskDetailPresenter(task.getObjectId());
         mTaskDetailPresenter.start();
 
         // When the presenter is asked to complete the task
         mTaskDetailPresenter.completeTask();
 
         // Then a request is sent to the task repository and the UI is updated
-        verify(mTasksRepository).completeTask(task.getId());
+        verify(mTasksRepository).completeTask(task.getObjectId());
         verify(mTaskDetailView).showTaskMarkedComplete();
     }
 
@@ -163,25 +163,25 @@ public class TaskDetailPresenterTest {
     public void activateTask() {
         // Given an initialized presenter with a completed task
         Task task = new Task(TITLE_TEST, DESCRIPTION_TEST, true);
-        mTaskDetailPresenter = givenTaskDetailPresenter(task.getId());
+        mTaskDetailPresenter = givenTaskDetailPresenter(task.getObjectId());
         mTaskDetailPresenter.start();
 
         // When the presenter is asked to activate the task
         mTaskDetailPresenter.activateTask();
 
         // Then a request is sent to the task repository and the UI is updated
-        verify(mTasksRepository).activateTask(task.getId());
+        verify(mTasksRepository).activateTask(task.getObjectId());
         verify(mTaskDetailView).showTaskMarkedActive();
     }
 
     @Test
     public void activeTaskIsShownWhenEditing() {
         // When the edit of an ACTIVE_TASK is requested
-        mTaskDetailPresenter = givenTaskDetailPresenter(ACTIVE_TASK.getId());
+        mTaskDetailPresenter = givenTaskDetailPresenter(ACTIVE_TASK.getObjectId());
         mTaskDetailPresenter.editTask();
 
         // Then the view is notified
-        verify(mTaskDetailView).showEditTask(ACTIVE_TASK.getId());
+        verify(mTaskDetailView).showEditTask(ACTIVE_TASK.getObjectId());
     }
 
     @Test

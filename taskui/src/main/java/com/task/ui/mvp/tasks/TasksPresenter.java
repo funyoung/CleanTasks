@@ -169,19 +169,19 @@ final public class TasksPresenter extends TaskBasePresenter implements TasksCont
     @Override
     public void openTaskDetails(@NonNull Task requestedTask) {
         checkNotNull(requestedTask, "requestedTask cannot be null!");
-        tasksView.showTaskDetailsUi(requestedTask.getId());
+        tasksView.showTaskDetailsUi(requestedTask.getObjectId());
     }
 
     @Override
     public void completeTask(@NonNull Task completedTask) {
         checkNotNull(completedTask, "completedTask cannot be null!");
-        execute(completeTask, completedTask.getId());
+        execute(completeTask, completedTask.getObjectId());
     }
 
     @Override
     public void activateTask(@NonNull Task activeTask) {
         checkNotNull(activeTask, "activeTask cannot be null!");
-        execute(activateTask, activeTask.getId());
+        execute(activateTask, activeTask.getObjectId());
     }
 
     @Override

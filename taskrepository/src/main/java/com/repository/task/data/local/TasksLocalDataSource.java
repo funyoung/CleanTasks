@@ -145,7 +145,7 @@ public class TasksLocalDataSource implements TasksDataSource {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(TaskEntry.COLUMN_NAME_ENTRY_ID, task.getId());
+        values.put(TaskEntry.COLUMN_NAME_ENTRY_ID, task.getObjectId());
         values.put(TaskEntry.COLUMN_NAME_TITLE, task.getTitle());
         values.put(TaskEntry.COLUMN_NAME_DESCRIPTION, task.getDescription());
         values.put(TaskEntry.COLUMN_NAME_COMPLETED, task.isCompleted());
@@ -163,7 +163,7 @@ public class TasksLocalDataSource implements TasksDataSource {
         values.put(TaskEntry.COLUMN_NAME_COMPLETED, true);
 
         String selection = TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-        String[] selectionArgs = { task.getId() };
+        String[] selectionArgs = { task.getObjectId() };
 
         db.update(TaskEntry.TABLE_NAME, values, selection, selectionArgs);
 
@@ -184,7 +184,7 @@ public class TasksLocalDataSource implements TasksDataSource {
         values.put(TaskEntry.COLUMN_NAME_COMPLETED, false);
 
         String selection = TaskEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-        String[] selectionArgs = { task.getId() };
+        String[] selectionArgs = { task.getObjectId() };
 
         db.update(TaskEntry.TABLE_NAME, values, selection, selectionArgs);
 

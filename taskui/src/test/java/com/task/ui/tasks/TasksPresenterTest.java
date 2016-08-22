@@ -182,7 +182,7 @@ public class TasksPresenterTest {
         mTasksPresenter.completeTask(task);
 
         // Then repository is called and task marked complete UI is shown
-        verify(mTasksRepository).completeTask(eq(task.getId()));
+        verify(mTasksRepository).completeTask(eq(task.getObjectId()));
         verify(mTasksView).showTaskMarkedComplete();
     }
 
@@ -196,7 +196,7 @@ public class TasksPresenterTest {
         mTasksPresenter.activateTask(task);
 
         // Then repository is called and task marked active UI is shown
-        verify(mTasksRepository).activateTask(eq(task.getId()));
+        verify(mTasksRepository).activateTask(eq(task.getObjectId()));
         verify(mTasksView).showTaskMarkedActive();
     }
 

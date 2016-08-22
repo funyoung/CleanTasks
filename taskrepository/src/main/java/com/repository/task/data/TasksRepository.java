@@ -131,7 +131,7 @@ public class TasksRepository implements TasksDataSource {
         if (cachedTasks == null) {
             cachedTasks = new LinkedHashMap<>();
         }
-        cachedTasks.put(task.getId(), task);
+        cachedTasks.put(task.getObjectId(), task);
     }
 
     @Override
@@ -140,13 +140,13 @@ public class TasksRepository implements TasksDataSource {
         remoteDataSource.completeTask(task);
         localDataSource.completeTask(task);
 
-        Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getId(), true);
+        Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getObjectId(), true);
 
         // Do in memory cache update to keep the app UI up to date
         if (cachedTasks == null) {
             cachedTasks = new LinkedHashMap<>();
         }
-        cachedTasks.put(task.getId(), completedTask);
+        cachedTasks.put(task.getObjectId(), completedTask);
     }
 
     @Override
@@ -161,13 +161,13 @@ public class TasksRepository implements TasksDataSource {
         remoteDataSource.activateTask(task);
         localDataSource.activateTask(task);
 
-        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getId());
+        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getObjectId());
 
         // Do in memory cache update to keep the app UI up to date
         if (cachedTasks == null) {
             cachedTasks = new LinkedHashMap<>();
         }
-        cachedTasks.put(task.getId(), activeTask);
+        cachedTasks.put(task.getObjectId(), activeTask);
     }
 
     @Override
@@ -286,7 +286,7 @@ public class TasksRepository implements TasksDataSource {
         }
         cachedTasks.clear();
         for (Task task : tasks) {
-            cachedTasks.put(task.getId(), task);
+            cachedTasks.put(task.getObjectId(), task);
         }
         isCacheIsDirty = false;
     }

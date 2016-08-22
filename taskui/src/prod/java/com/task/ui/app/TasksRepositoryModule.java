@@ -6,8 +6,8 @@ import com.repository.task.data.Local;
 import com.repository.task.data.Remote;
 import com.repository.task.data.TasksDataSource;
 import com.repository.task.data.TasksRepository;
+import com.repository.task.data.leancloud.TasksLeanDataSource;
 import com.repository.task.data.local.TasksLocalDataSource;
-import com.repository.task.data.remote.TasksRemoteDataSource;
 
 import javax.inject.Singleton;
 
@@ -31,7 +31,7 @@ public class TasksRepositoryModule {
     @Provides
     @Remote
     TasksDataSource provideTasksRemoteDataSource() {
-        return new TasksRemoteDataSource();
+        return new TasksLeanDataSource();
     }
 
 }

@@ -111,13 +111,13 @@ public class AddEditTaskPresenterTest {
     public void populateTask_callsRepoAndUpdatesView() {
         Task testTask = new Task("TITLE", "DESCRIPTION");
         // Get a reference to the class under test
-        mAddEditTaskPresenter = givenEditTaskPresenter(testTask.getId());
+        mAddEditTaskPresenter = givenEditTaskPresenter(testTask.getObjectId());
 
         // When the presenter is asked to populate an existing task
         mAddEditTaskPresenter.populateTask();
 
         // Then the task repository is queried and the view updated
-        verify(mTasksRepository).getTask(eq(testTask.getId()), mGetTaskCallbackCaptor.capture());
+        verify(mTasksRepository).getTask(eq(testTask.getObjectId()), mGetTaskCallbackCaptor.capture());
 
         // Simulate callback
         mGetTaskCallbackCaptor.getValue().onTaskLoaded(testTask);
