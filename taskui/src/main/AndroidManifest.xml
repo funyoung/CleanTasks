@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.task.ui">
+
+    <application >
+        <activity android:name=".mvp.tasks.TasksActivity">
+        </activity>
+        <activity android:name=".mvp.taskdetail.TaskDetailActivity" />
+        <activity android:name=".mvp.addedittask.AddEditTaskActivity" />
+        <activity android:name=".mvp.statistics.StatisticsActivity" />
+    </application>
+
+</manifest>
