@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import com.clean.common.remote.CommonApiManager;
 import com.repository.task.data.TasksDataSource;
 import com.repository.task.model.Task;
+import com.repository.task.model.TaskHead;
 
 import javax.inject.Singleton;
 
@@ -37,6 +38,8 @@ public class TasksLeanDataSource extends CommonApiManager<TodoApiService> implem
     private static final String BASE_URL = "https://us-api.leancloud.cn";
 
     private Subscription getTasksSubscription;
+    private Subscription getTaskDetailSubscription;
+    private Subscription saveTaskSubscription;
 
     public TasksLeanDataSource() {
         super(BASE_URL, TodoApiService.class);
@@ -114,11 +117,47 @@ public class TasksLeanDataSource extends CommonApiManager<TodoApiService> implem
 //                callback.onTaskLoaded(task);
 //            }
 //        }, SERVICE_LATENCY_IN_MILLIS);
+
+        unsubscribe(getTaskDetailSubscription);
+
+        getTaskDetailSubscription = fork(getService().getTask(taskId)).subscribe(new Observer<Task>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                callback.onDataNotAvailable();
+            }
+
+            @Override
+            public void onNext(Task task) {
+                callback.onTaskLoaded(task);
+            }
+        });
     }
 
     @Override
     public void saveTask(@NonNull Task task) {
 //        TASKS_SERVICE_DATA.put(task.getObjectId(), task);
+
+        unsubscribe(saveTaskSubscription);
+
+        saveTaskSubscription = fork(getService().saveTask(task)).subscribe(new Observer<TaskHead>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(TaskHead task) {
+                String id = task.getObjectId();
+                String test = id;
+            }
+        });
     }
 
     @Override
