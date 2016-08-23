@@ -21,7 +21,6 @@ import android.support.annotation.NonNull;
 import com.clean.common.remote.CommonApiManager;
 import com.repository.task.data.TasksDataSource;
 import com.repository.task.model.Task;
-import com.repository.task.model.TaskHead;
 
 import javax.inject.Singleton;
 
@@ -83,7 +82,7 @@ public class TasksLeanDataSource extends CommonApiManager<TodoApiService> implem
 
         unsubscribe(getTasksSubscription);
 
-        getTasksSubscription = fork(getService().getTasks()).subscribe(new Observer<TaskResponse>() {
+        getTasksSubscription = fork(getService().getTasks()).subscribe(new Observer<TasksResponse>() {
             @Override
             public void onCompleted() {
             }
@@ -94,8 +93,8 @@ public class TasksLeanDataSource extends CommonApiManager<TodoApiService> implem
             }
 
             @Override
-            public void onNext(TaskResponse taskResponse) {
-                callback.onTasksLoaded(taskResponse.getItems());
+            public void onNext(TasksResponse tasksResponse) {
+                callback.onTasksLoaded(tasksResponse.getItems());
             }
         });
     }
@@ -143,7 +142,7 @@ public class TasksLeanDataSource extends CommonApiManager<TodoApiService> implem
 
         unsubscribe(saveTaskSubscription);
 
-        saveTaskSubscription = fork(getService().saveTask(task)).subscribe(new Observer<TaskHead>() {
+        saveTaskSubscription = fork(getService().saveTask(task)).subscribe(new Observer<Task>() {
             @Override
             public void onCompleted() {
             }
@@ -153,7 +152,7 @@ public class TasksLeanDataSource extends CommonApiManager<TodoApiService> implem
             }
 
             @Override
-            public void onNext(TaskHead task) {
+            public void onNext(Task task) {
                 String id = task.getObjectId();
                 String test = id;
             }
@@ -162,26 +161,49 @@ public class TasksLeanDataSource extends CommonApiManager<TodoApiService> implem
 
     @Override
     public void completeTask(@NonNull Task task) {
-        Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getObjectId(), true);
+//        Task completedTask = new Task(task.getTitle(), task.getDescription(), task.getObjectId(), true);
 //        TASKS_SERVICE_DATA.put(task.getObjectId(), completedTask);
+        completeTask(task.getObjectId());
     }
 
     @Override
     public void completeTask(@NonNull String taskId) {
         // Not required for the remote data source because the {@link TasksRepository} handles
         // converting from a {@code taskId} to a {@link task} using its cached data.
+        doCompleteTask(taskId, true);
+    }
+
+    private void doCompleteTask(String taskId, boolean flag) {
+        TaskComplete complete = new TaskComplete(flag);
+        fork(getService().completeTask(taskId, complete)).subscribe(new Observer<Task>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(Task task) {
+                String id = task.getObjectId();
+                String test = id;
+            }
+        });
     }
 
     @Override
     public void activateTask(@NonNull Task task) {
-        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getObjectId());
+//        Task activeTask = new Task(task.getTitle(), task.getDescription(), task.getObjectId());
 //        TASKS_SERVICE_DATA.put(task.getObjectId(), activeTask);
+        activateTask(task.getObjectId());
     }
 
     @Override
     public void activateTask(@NonNull String taskId) {
         // Not required for the remote data source because the {@link TasksRepository} handles
         // converting from a {@code taskId} to a {@link task} using its cached data.
+        doCompleteTask(taskId, false);
     }
 
     @Override
